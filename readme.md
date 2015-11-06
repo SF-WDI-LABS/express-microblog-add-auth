@@ -21,8 +21,8 @@
 
 ## Bonus
 
-* Validations and error-handling
-* Build a "likes" functionality
+* Prevent invalid data from being saved into the database, and handle errors in your API routes.
+* Build a "likes" functionality that lets users "upvote" blog posts.
 * Add a "category" attribute to your blog posts. When a user clicks on a category, take them to a page that displays all the blog posts that have that category.
 
 ## Getting Started
