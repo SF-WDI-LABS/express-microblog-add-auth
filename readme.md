@@ -4,7 +4,12 @@
 
 ## Minimum Requirements
 
-* A server with RESTful API routes for blog posts.
+* A server with RESTful API routes for blog posts. Your API should have the following five routes:
+  * `GET /api/posts` to READ all blog posts
+  * `POST /api/posts` to CREATE a new blog post
+  * `GET /api/posts/:id` to READ one blog post
+  * `PUT /api/posts/:id` to UPDATE one blog post
+  * `DELETE /api/posts/:id` to DELETE one blog post
 * Request specs for each of your API routes.
 * A persistent database to store blog posts. Blog posts should at minimum have a `title` and `description`.
 * A client that uses AJAX and Handlebars templating to `CREATE`, `READ`, `UPDATE`, and `DELETE` blog posts. **A user should be able to:**
@@ -23,6 +28,15 @@
 ## Getting Started
 
 1. Fork this repo, and clone it into your `develop` folder on your local machine.
+2. `npm init` to get started. You'll need to install the following node modules:
+  * `express`
+  * `body-parser`
+  * `hbs`
+  * `mongoose`
+  * `mocha`
+  * `chai`
+  * `request`
+3. Use Postman to test and debug your API routes. Make sure you are always `console.log`-ing data that comes back from your API when you make an AJAX call before you write any other code.
 
 ## Submission
 
