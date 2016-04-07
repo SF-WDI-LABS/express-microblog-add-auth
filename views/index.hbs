@@ -10,7 +10,19 @@
   <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
   <!-- custom styles -->
-  <link rel="stylesheet" type="text/css" href="styles/main.css">
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
+
+  <!-- jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+  <!-- bootstrap js -->
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  <!-- handlebars -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+
+  <!-- custom script -->
+  <script type="text/javascript" src="/scripts/app.js"></script>
 
   <title>Express Microblog App</title>
 </head>
@@ -29,7 +41,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        
+
         <!-- new post form-->
         <form class="form-inline" id="create-post">
           <div class="form-group">
@@ -46,7 +58,7 @@
 
         <!-- list of posts -->
         <ul class="list-group" id="posts-list">
-          
+
           <!-- handlebars template -->
           <script id="posts-template" type="text/x-handlebars-template">
             \{{#each posts}}
@@ -54,7 +66,7 @@
 
                 <!-- post label (title) -->
                 <span class="label label-default">\{{title}}</span>
-                
+
                 <!-- post description -->
                 \{{description}}
 
@@ -63,13 +75,13 @@
                   <a href="javascript:void(0)" data-toggle="collapse" data-target="#update-\{{_id}}">
                     <span class="glyphicon glyphicon-pencil"></span>
                   </a>
-                  
+
                   <!-- trash can icon to delete post -->
                    <a href="javascript:void(0)" class="delete-post">
                     <span class="glyphicon glyphicon-trash"></span>
                   </a>
                 </div>
-                
+
                 <!-- form to update post -->
                 <div class="collapse" id="update-\{{_id}}">
                   <br>
@@ -92,17 +104,5 @@
       </div>
     </div>
   </div>
-  
-  <!-- jquery -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-  <!-- bootstrap js -->
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-  <!-- handlebars -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
-
-  <!-- custom script -->
-  <script type="text/javascript" src="scripts/main.js"></script>
 </body>
 </html>
