@@ -46,9 +46,12 @@ app.get('/signup', function (req, res) {
   res.render('signup'); // signup form
 });
 
+app.get('/login', function (req, res) {
+  res.render('login'); // you can also use res.sendFile
+});
 
-// JSON API ENDPOINTS / ROUTES
 
+// AUTH ENDPOINTS
 app.post('/signup', function (req, res) {
   var new_user = new User({ username: req.body.username });
   User.register(new_user, req.body.password,
@@ -61,7 +64,21 @@ app.post('/signup', function (req, res) {
   );
 });
 
+app.post('/login', passport.authenticate('local'), function (req, res) {
+  console.log(JSON.stringify(req.user));
+  res.redirect('/')
+});
 
+app.get('/logout', function (req, res) {
+  console.log("BEFORE logout", req.user);
+  req.logout();
+  console.log("AFTER logout", req.user);
+  res.redirect('/');
+});
+
+// JSON API ENDPOINTS / ROUTES
+
+// POSTS
 // get all posts
 app.get('/api/posts', function (req, res) {
   // find all posts in db
