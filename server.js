@@ -36,14 +36,31 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'hbs');
 
 
-// HOMEPAGE ROUTE
+// HTML ENDPOINTS
 
 app.get('/', function (req, res) {
   res.render('index');
 });
 
+app.get('/signup', function (req, res) {
+  res.render('signup'); // signup form
+});
 
-// API ROUTES
+
+// JSON API ENDPOINTS / ROUTES
+
+app.post('/signup', function (req, res) {
+  var new_user = new User({ username: req.body.username });
+  User.register(new_user, req.body.password,
+    function (err, newUser) {
+      passport.authenticate('local')(req, res, function() {
+        console.log("SIGNUP SUCCESS")
+        res.redirect('/');
+      });
+    }
+  );
+});
+
 
 // get all posts
 app.get('/api/posts', function (req, res) {
