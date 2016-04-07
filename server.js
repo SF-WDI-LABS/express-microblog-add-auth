@@ -39,7 +39,7 @@ app.set('view engine', 'hbs');
 // HTML ENDPOINTS
 
 app.get('/', function (req, res) {
-  res.render('index');
+  res.render('index', {user: JSON.stringify(req.user) + "|| null" });
 });
 
 app.get('/signup', function (req, res) {
