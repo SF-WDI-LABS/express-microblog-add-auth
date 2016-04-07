@@ -1,8 +1,7 @@
 // require express and other modules
 var express = require('express'),
     app = express(),
-    bodyParser = require('body-parser'),
-    mongoose = require('mongoose');
+    bodyParser = require('body-parser');
 
 // configure bodyParser (for receiving form data)
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,11 +12,9 @@ app.use(express.static(__dirname + '/public'));
 // set view engine to hbs (handlebars)
 app.set('view engine', 'hbs');
 
-// connect to mongodb
-mongoose.connect('mongodb://localhost/microblog-app');
-
 // require Post model
-var Post = require('./models/post');
+var db = require('./models'),
+    Post = db.Post;
 
 
 // HOMEPAGE ROUTE
