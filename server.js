@@ -1,10 +1,28 @@
 // require express and other modules
 var express = require('express'),
     app = express(),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy;
 
 // configure bodyParser (for receiving form data)
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({
+  secret: 'supersecretkey', // change this!
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
@@ -14,7 +32,8 @@ app.set('view engine', 'hbs');
 
 // require Post model
 var db = require('./models'),
-    Post = db.Post;
+    Post = db.Post,
+    User = db.User;
 
 
 // HOMEPAGE ROUTE
