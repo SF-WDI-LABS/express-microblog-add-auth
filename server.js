@@ -93,6 +93,10 @@ app.get('/api/posts', function (req, res) {
 
 // create new post
 app.post('/api/posts', function (req, res) {
+  if (!req.user) {
+    return res.sendStatus(401);
+  }
+
   // create new post with form data (`req.body`)
   var newPost = new Post(req.body);
 
@@ -127,6 +131,11 @@ app.get('/api/posts/:id', function (req, res) {
 
 // update post
 app.put('/api/posts/:id', function (req, res) {
+
+  if (!req.user) {
+    return res.sendStatus(401);
+  }
+
   // get post id from url params (`req.params`)
   var postId = req.params.id;
 
@@ -153,6 +162,11 @@ app.put('/api/posts/:id', function (req, res) {
 
 // delete post
 app.delete('/api/posts/:id', function (req, res) {
+
+  if (!req.user) {
+    return res.sendStatus(401);
+  }
+
   // get post id from url params (`req.params`)
   var postId = req.params.id;
 
