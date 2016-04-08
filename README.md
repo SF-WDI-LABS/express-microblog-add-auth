@@ -344,7 +344,8 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
   // log in user
   app.post('/login', passport.authenticate('local'), function (req, res) {
     console.log(req.user);
-    res.send('logged in!!!');
+    res.send('logged in!!!'); // sanity check
+    // res.redirect('/'); // preferred!
   });
   ```
 
@@ -369,9 +370,9 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 
   // log out user
   app.get('/logout', function (req, res) {
-    console.log("BEFORE logout", req.user);
+    console.log("BEFORE logout", JSON.stringify(req.user));
     req.logout();
-    console.log("AFTER logout", req.user);
+    console.log("AFTER logout", JSON.stringify(req.user));
     res.redirect('/');
   });
   ```
@@ -384,7 +385,7 @@ This is an odd step, but a useful strategy for attaching your user to the page w
 
   ```html
   <script type="text/javascript">
-    window.user = {{{json user}}}
+    window.user = {{{ user }}};
   </script>
   ```
 
@@ -397,7 +398,7 @@ This is an odd step, but a useful strategy for attaching your user to the page w
 
    ...
    app.get('/', function (req, res) {
-        res.render('index', {user: req.user});
+        res.render('index', {user: JSON.stingify(req.user) + " || null"});
    });
   ```
 
@@ -406,9 +407,9 @@ This is an odd step, but a useful strategy for attaching your user to the page w
 3. Visit your homepage, and see if the user object is globally accessible:
 
     ```js
-    window.user // {...}
+    window.user // {_id: "13245t", username: "example"}
     // or just
-    user //  {...}
+    user //  {_id: "13245t", username: "example"}
     ```
 
     Congrats! If a user is currently logged in, you now have an easy way of retrieving their data from the page!
@@ -435,3 +436,16 @@ if (req.user) {
     res.status(401).send({error: "Not Authorized! Please login first."})
 }
 ```
+
+Or using the "return early and often" pattern:
+
+``` js
+if (!req.user) {
+    res.sendStatus(401)
+}
+```
+
+This approach may eventually start to get cubersome, at which point you should consider refactoring to use express middleware. For example, you could create a blanket check that no un-logged-in user should ever be able to `DELETE`. To tget this to work you will need to use [`app.use` and your own custom middleware](http://expressjs.com/en/4x/api.html#app.use).
+
+#### Solution
+See the `solution` branch.
