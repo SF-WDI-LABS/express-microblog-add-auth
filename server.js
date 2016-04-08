@@ -43,16 +43,30 @@ app.get('/', function (req, res) {
 });
 
 app.get('/signup', function (req, res) {
+  // don't let the user signup again if they already exist
+  if (req.user) {
+    return res.redirect('/');
+  }
   res.render('signup'); // signup form
 });
 
 app.get('/login', function (req, res) {
+  // if user is logged in, don't let them see login view
+  if (req.user) {
+    return res.redirect('/');
+  }
+
   res.render('login'); // you can also use res.sendFile
 });
 
 
 // AUTH ENDPOINTS
 app.post('/signup', function (req, res) {
+  // if user is logged in, don't let them sign up again
+  if (!req.user) {
+    return res.redirect('/');
+  }
+
   var new_user = new User({ username: req.body.username });
   User.register(new_user, req.body.password,
     function (err, newUser) {
