@@ -398,7 +398,7 @@ This is an odd step, but a useful strategy for attaching your user to the page w
 
    ...
    app.get('/', function (req, res) {
-        res.render('index', {user: JSON.stingify(req.user) + " || null"});
+        res.render('index', {user: JSON.stringify(req.user) + " || null"});
    });
   ```
 
