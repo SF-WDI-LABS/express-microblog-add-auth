@@ -441,11 +441,11 @@ Or using the "return early and often" pattern:
 
 ``` js
 if (!req.user) {
-    res.sendStatus(401)
+   return res.sendStatus(401);
 }
 ```
 
-This approach may eventually start to get cubersome, at which point you should consider refactoring to use express middleware. For example, you could create a blanket check that no un-logged-in user should ever be able to `DELETE`. To tget this to work you will need to use [`app.use` and your own custom middleware](http://expressjs.com/en/4x/api.html#app.use).
+These approaches may eventually start to get repetitive and cumbersome, at which point you should consider refactoring to use express middleware. For example, you could create a blanket check that no un-logged-in user should ever be able to `DELETE`. To get this to work you will need to research [`app.use` and create your own custom middleware](http://expressjs.com/en/4x/api.html#app.use).
 
 #### Solution
 See the `solution` branch.
