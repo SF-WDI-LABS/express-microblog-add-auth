@@ -205,7 +205,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 1. Create a new view with a form for users to sign up.
 
   ```bash
-  ➜  touch views/signup.hbs
+  ➜  touch views/signup.html
   ```
 
   Your signup form should look something like this:
@@ -308,7 +308,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 1. Create a new view with a form for users to login.
 
   ```bash
-  ➜  touch views/login.hbs
+  ➜  touch views/login.html
   ```
 
   Your login form should look something like this:
