@@ -213,19 +213,45 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
   ```html
   <!-- signup.html -->
 
-  <h2>Sign Up</h2>
-  <br>
-  <form method="POST" action="/signup">
-    <div class="form-group">
-      <input type="text" name="username" class="form-control" placeholder="Username" autofocus>
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <!-- set viewport to device width to make site responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- bootstrap css -->
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- custom styles -->
+    <link rel="stylesheet" type="text/css" href="/styles/style.css">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <!-- bootstrap js -->
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <title>Express Microblog App</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Sign Up</h2>
+          <br>
+          <form method="POST" action="/signup">
+            <div class="form-group">
+              <input type="text" name="username" class="form-control" placeholder="Username" autofocus>
+            </div>
+            <div class="form-group">
+              <input type="password" name="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="form-group">
+              <input type="submit" class="btn btn-block btn-primary" value="Sign Up">
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <input type="password" name="password" class="form-control" placeholder="Password">
-    </div>
-    <div class="form-group">
-      <input type="submit" class="btn btn-block btn-primary" value="Sign Up">
-    </div>
-  </form>
+  </body>
+</html>
+
   ```
 
   Take note of the `method` and `action` in the form. This combination of the request type `POST` and the URL `/signup` will correspond to a server route for signing up new users.
@@ -243,7 +269,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 
   // show signup view
   app.get('/signup', function (req, res) {
-   res.sendFile(__dirname + '/views/signup.html');
+   res.sendFile('/views/signup.html', { root: __dirname });
   });
   ```
 
@@ -288,21 +314,48 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
   Your login form should look something like this:
 
   ```html
-  <!-- login.hbs -->
+  <!-- login.html -->
 
-  <h2>Log In</h2>
-  <br>
-  <form method="POST" action="/login">
-    <div class="form-group">
-      <input type="text" name="username" class="form-control" placeholder="Username" autofocus>
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <!-- set viewport to device width to make site responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- bootstrap css -->
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- custom styles -->
+    <link rel="stylesheet" type="text/css" href="/styles/style.css">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <!-- bootstrap js -->
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <title>Express Microblog App</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Log In</h2>
+          <br>
+          <form method="POST" action="/login">
+            <div class="form-group">
+              <input type="text" name="username" class="form-control" placeholder="Username" autofocus>
+            </div>
+            <div class="form-group">
+              <input type="password" name="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="form-group">
+              <input type="submit" class="btn btn-block btn-primary" value="Log In">
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <input type="password" name="password" class="form-control" placeholder="Password">
-    </div>
-    <div class="form-group">
-      <input type="submit" class="btn btn-block btn-primary" value="Log In">
-    </div>
-  </form>
+  </body>
+</html>
+
   ```
 
   Take note of the `method` and `action` in the form. This combination of the request type `POST` and the URL `/login` will correspond to a server route for logging in existing users.
@@ -324,7 +377,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 
   // show login view
   app.get('/login', function (req, res) {
-    res.render('login'); // you can also use res.sendFile
+   res.sendFile('/views/login.html', { root: __dirname });
   });
   ```
 
