@@ -211,7 +211,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
   Your signup form should look something like this:
 
   ```html
-  <!-- signup.hbs -->
+  <!-- signup.html -->
 
   <h2>Sign Up</h2>
   <br>
@@ -243,7 +243,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 
   // show signup view
   app.get('/signup', function (req, res) {
-    res.render('signup'); // you can also use res.sendFile
+   res.sendFile(__dirname + '/views/signup.html');
   });
   ```
 
