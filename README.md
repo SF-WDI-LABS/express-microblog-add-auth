@@ -185,7 +185,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
    module.exports.User = require("./user");
   ```
 
-6. Back in `server.js`, require the `User` model (you can do this right under where you required the `Post` model).
+6. Back in `server.js`, require the `User` model (you can do this right under where you required the `Post` model). Ensure that any references to `User` in `server.js` come after variable declaration for `User`!
 
   ```js
   /*
