@@ -5,14 +5,14 @@
 ## MicroBlog Overview
 
 This application has the following REST endpoints:
-  * `GET /api/posts` to READ all blog posts
-  * `POST /api/posts` to CREATE a new blog post
-  * `GET /api/posts/:id` to READ one blog post
-  * `PUT /api/posts/:id` to UPDATE one blog post
-  * `DELETE /api/posts/:id` to DELETE one blog post
+  * `GET /` to READ all blog posts
+  * `POST /posts` to CREATE a new blog post
+  * `GET /posts/:id` to READ one blog post
+  * `PUT /posts/:id` to UPDATE one blog post
+  * `DELETE /posts/:id` to DELETE one blog post
 * Full CRUD for blog posts
 * A persistent database that store blog posts with a `title` and `description`.
-* Client-side templating using Handlebars (and AJAX)
+* Server-side templating using EJS
 * Bootstrap
 
 ## Initial Setup
@@ -26,7 +26,7 @@ This application has the following REST endpoints:
 Adapted from <a href="http://mherman.org/blog/2015/01/31/local-authentication-with-passport-and-express-4/#.VkVw8t-rSRs" target="_blank">User Authentication With Passport and Express 4</a>.
 
 ### Install additional dependencies
- 
+
 1. Install the new libraries `cookie-parser`, `express-session`, `passport`, `passport-local`, and `passport-local-mongoose`.
 
   ```bash
@@ -47,10 +47,10 @@ Adapted from <a href="http://mherman.org/blog/2015/01/31/local-authentication-wi
    */
 
   // require express and other modules
-  var express = require('express'),
+  var express = require("express"),
       app = express(),
-      bodyParser = require('body-parser'),
-      mongoose = require('mongoose'),
+      bodyParser = require("body-parser"),
+      methodOverride = require("method-override"),
 
       //  NEW ADDITIONS
       cookieParser = require('cookie-parser'),
@@ -167,7 +167,7 @@ Adapted from <a href="http://mherman.org/blog/2015/01/31/local-authentication-wi
     username: String,
     password: String
   });
-  
+
   UserSchema.plugin(passportLocalMongoose);
 
   var User = mongoose.model('User', UserSchema);
@@ -205,7 +205,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 1. Create a new view with a form for users to sign up.
 
   ```bash
-  ➜  touch views/signup.html
+  ➜  touch views/signup.ejs
   ```
 
   Your signup form should look something like this:
@@ -269,7 +269,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 
   // show signup view
   app.get('/signup', function (req, res) {
-   res.sendFile('/views/signup.html', { root: __dirname });
+   res.render('signup');
   });
   ```
 
@@ -308,7 +308,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 1. Create a new view with a form for users to login.
 
   ```bash
-  ➜  touch views/login.html
+  ➜  touch views/login.ejs
   ```
 
   Your login form should look something like this:
@@ -377,7 +377,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 
   // show login view
   app.get('/login', function (req, res) {
-   res.sendFile('/views/login.html', { root: __dirname });
+   res.render('login');
   });
   ```
 
