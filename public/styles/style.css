@@ -12,3 +12,12 @@ h1 {
   color: #000;
   opacity: 0.5;
 }
+
+.remove-link-style {
+  color: #000;
+  text-decoration: none;
+}
+
+.remove-link-style:hover {
+  text-decoration: none;
+}
