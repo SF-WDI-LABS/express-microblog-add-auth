@@ -48,7 +48,7 @@ app.get("/", function (req, res) {
     if (err) {
       res.status(500).json({ error: err.message, });
     } else {
-      res.render("index", { posts: allPosts, });
+      res.render("index", { posts: allPosts, user: req.user, });
     }
   });
 });
@@ -69,6 +69,25 @@ app.post("/signup", function (req, res) {
       }
   );
 });
+
+app.get("/login", function (req, res) {
+  res.render("login");
+});
+
+app.post("/login", passport.authenticate("local"), function (req, res) {
+  console.log(req.user);
+  // res.send("logged in!!!"); // sanity check
+  res.redirect("/"); // preferred!
+});
+
+app.get("/logout", function (req, res) {
+  console.log("BEFORE logout", JSON.stringify(req.user));
+  req.logout();
+  console.log("AFTER logout", JSON.stringify(req.user));
+  res.redirect("/");
+});
+
+// SHOW PAGE ROUTE
 
 app.get("/posts/:id", function(req, res) {
   Post.findById(req.params.id, function (err, foundPost) {
