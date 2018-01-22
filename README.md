@@ -440,7 +440,7 @@ Just like in `erb`, `ejs` gives us the ability to conditionally render things on
     <a href="/login">Log in</a>
     <a href="/signup">Sign up</a>
   <% } else { %>
-    <div>Welcome, <%= user.name %>!</div>
+    <div>Welcome, <%= user.username %>!</div>
     <a href="/logout">Log out</a>
   <% } %>
   ```

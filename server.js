@@ -3,6 +3,9 @@ var express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
   methodOverride = require("method-override");
+// require Post model
+var db = require("./models"),
+  Post = db.Post;
 
 // configure bodyParser (for receiving form data)
 app.use(bodyParser.urlencoded({ extended: true, }));
@@ -14,10 +17,6 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 app.use(methodOverride("_method"));
-
-// require Post model
-var db = require("./models"),
-  Post = db.Post;
 
 
 // HOMEPAGE ROUTE
