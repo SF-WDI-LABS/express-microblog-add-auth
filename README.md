@@ -497,3 +497,7 @@ These approaches may eventually start to get repetitive and cumbersome, at which
 
 #### Solution
 See the `solution` branch.
+
+## Sprint 2: Adding Associations
+
+See the [sprint 2](sprint2.md) page.
