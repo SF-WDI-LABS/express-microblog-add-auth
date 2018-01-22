@@ -25,3 +25,12 @@ Now that we have users on our blog, we should start ensuring that we show & allo
 1. Update the `app.put("/posts/:id")` and `app.delete("/posts/:id")` routes to ensure that only the user who wrote the posts can perform those actions.
 
 2. Update the index and show pages to only show the edit/delete buttons to the user who owns that post. (Ideally, this means that from the index page, a user can edit their own posts and also read everyone else's posts.)
+
+### Refactor: This View Code Is Gross
+
+1. Move the head of the HTML into a partial. Call that partial in each of `index/show/login/signup.ejs`. Make sure it's displaying well on each page.
+
+2. Move the HTML for displaying a single post into a partial. Call that partial in `index` and `show`. Make sure it looks good in both places.
+  > Challenge: can you show a link to the show page from the index, but not from the show page, by passing an extra parameter to the partial?
+
+3. Move the HTML for displaying login or signup inputs into a partial. Call that partial from both `signup.ejs` and `login.ejs`. Test all the functionality.
