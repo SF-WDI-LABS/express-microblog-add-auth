@@ -5,28 +5,27 @@
 ## MicroBlog Overview
 
 This application has the following REST endpoints:
-  * `GET /api/posts` to READ all blog posts
-  * `POST /api/posts` to CREATE a new blog post
-  * `GET /api/posts/:id` to READ one blog post
-  * `PUT /api/posts/:id` to UPDATE one blog post
-  * `DELETE /api/posts/:id` to DELETE one blog post
+  * `GET /` to READ all blog posts
+  * `POST /posts` to CREATE a new blog post
+  * `GET /posts/:id` to READ one blog post
+  * `PUT /posts/:id` to UPDATE one blog post
+  * `DELETE /posts/:id` to DELETE one blog post
 * Full CRUD for blog posts
 * A persistent database that store blog posts with a `title` and `description`.
-* Client-side templating using Handlebars (and AJAX)
+* Server-side templating using EJS
 * Bootstrap
 
 ## Initial Setup
 
 1. Fork this repo, and clone it into your `develop` folder on your local machine.
-2. Next, run `npm install` to download the dependencies listed in `package.json`
-3. You are encouraged to use Postman to test and debug your API routes. Make sure you are always `console.log`-ing data that comes back from your API when you make an AJAX call before you write any other code.
+2. Next, run `npm install` to download the dependencies listed in `package.json`.
 
 ## Micro-blog Tutorial: Setting Up Users & Auth
 
 Adapted from <a href="http://mherman.org/blog/2015/01/31/local-authentication-with-passport-and-express-4/#.VkVw8t-rSRs" target="_blank">User Authentication With Passport and Express 4</a>.
 
 ### Install additional dependencies
- 
+
 1. Install the new libraries `cookie-parser`, `express-session`, `passport`, `passport-local`, and `passport-local-mongoose`.
 
   ```bash
@@ -39,7 +38,7 @@ Adapted from <a href="http://mherman.org/blog/2015/01/31/local-authentication-wi
   * **<a href="https://github.com/jaredhanson/passport-local" target="_blank">passport-local</a>:** passport strategy for authenticating with username and password
   * **<a href="https://github.com/saintedlama/passport-local-mongoose" target="_blank">passport-local-mongoose</a>:** mongoose plugin that simplifies building username and password auth with passport
 
-3. Require the newly installed dependencies in `server.js`.
+2. Require the newly installed dependencies in `server.js`.
 
   ```js
   /*
@@ -47,10 +46,10 @@ Adapted from <a href="http://mherman.org/blog/2015/01/31/local-authentication-wi
    */
 
   // require express and other modules
-  var express = require('express'),
+  var express = require("express"),
       app = express(),
-      bodyParser = require('body-parser'),
-      mongoose = require('mongoose'),
+      bodyParser = require("body-parser"),
+      methodOverride = require("method-override"),
 
       //  NEW ADDITIONS
       cookieParser = require('cookie-parser'),
@@ -167,7 +166,7 @@ Adapted from <a href="http://mherman.org/blog/2015/01/31/local-authentication-wi
     username: String,
     password: String
   });
-  
+
   UserSchema.plugin(passportLocalMongoose);
 
   var User = mongoose.model('User', UserSchema);
@@ -205,13 +204,13 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 1. Create a new view with a form for users to sign up.
 
   ```bash
-  ➜  touch views/signup.html
+  ➜  touch views/signup.ejs
   ```
 
   Your signup form should look something like this:
 
   ```html
-  <!-- signup.html -->
+  <!-- signup.ejs -->
 
   <!DOCTYPE html>
 <html lang="en">
@@ -269,7 +268,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 
   // show signup view
   app.get('/signup', function (req, res) {
-   res.sendFile('/views/signup.html', { root: __dirname });
+   res.render('signup');
   });
   ```
 
@@ -308,7 +307,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 1. Create a new view with a form for users to login.
 
   ```bash
-  ➜  touch views/login.html
+  ➜  touch views/login.ejs
   ```
 
   Your login form should look something like this:
@@ -377,7 +376,7 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
 
   // show login view
   app.get('/login', function (req, res) {
-   res.sendFile('/views/login.html', { root: __dirname });
+   res.render('login');
   });
   ```
 
@@ -430,16 +429,20 @@ Make sure to also update `/models/index.js` to import/export your `User` model:
   });
   ```
 
-### Embedding the User Object in the page
+### Using User Data on the Page
 
-This is an odd step, but a useful strategy for attaching your user to the page without requiring an additional request/response for user data.
+Just like in `erb`, `ejs` gives us the ability to conditionally render things on our pages using conditionals.
 
-1. Open `views/index.hbs` and add the following script:
+1. Open `views/index.ejs` and include the following in the navigation bar:
 
   ```html
-  <script type="text/javascript">
-    window.user = {{{ user }}};
-  </script>
+  <% if(!user) { %>
+    <a href="/login">Log in</a>
+    <a href="/signup">Sign up</a>
+  <% } else { %>
+    <div>Welcome, <%= user.name %>!</div>
+    <a href="/logout">Log out</a>
+  <% } %>
   ```
 
 2. We also need to update `server.js` to pass in the `user` object:
@@ -451,21 +454,13 @@ This is an odd step, but a useful strategy for attaching your user to the page w
 
    ...
    app.get('/', function (req, res) {
-        res.render('index', {user: JSON.stringify(req.user) + " || null"});
+        res.render('index', {user: req.user);
    });
   ```
 
-  This works just like you would expect a front-end handlebars template to work, except that now we're doing this work on the backend!
 
-3. Visit your homepage, and see if the user object is globally accessible:
+3. Visit your homepage, and see if you can see the correct buttons when logged in/out.
 
-    ```js
-    window.user // {_id: "13245t", username: "example"}
-    // or just
-    user //  {_id: "13245t", username: "example"}
-    ```
-
-    Congrats! If a user is currently logged in, you now have an easy way of retrieving their data from the page!
 
 ### Authorization: Protecting Routes
 
