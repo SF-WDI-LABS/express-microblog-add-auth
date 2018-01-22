@@ -38,7 +38,7 @@ Adapted from <a href="http://mherman.org/blog/2015/01/31/local-authentication-wi
   * **<a href="https://github.com/jaredhanson/passport-local" target="_blank">passport-local</a>:** passport strategy for authenticating with username and password
   * **<a href="https://github.com/saintedlama/passport-local-mongoose" target="_blank">passport-local-mongoose</a>:** mongoose plugin that simplifies building username and password auth with passport
 
-3. Require the newly installed dependencies in `server.js`.
+2. Require the newly installed dependencies in `server.js`.
 
   ```js
   /*

@@ -2,8 +2,18 @@
 var express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
-  methodOverride = require("method-override");
+  methodOverride = require("method-override"),
 
+  //  NEW ADDITIONS
+  cookieParser = require("cookie-parser"),
+  session = require("express-session"),
+  passport = require("passport"),
+  LocalStrategy = require("passport-local").Strategy;
+
+// require Post model
+var db = require("./models"),
+  Post = db.Post,
+  User = db.User;
 // configure bodyParser (for receiving form data)
 app.use(bodyParser.urlencoded({ extended: true, }));
 
@@ -15,9 +25,20 @@ app.set("view engine", "ejs");
 
 app.use(methodOverride("_method"));
 
-// require Post model
-var db = require("./models"),
-  Post = db.Post;
+app.use(cookieParser());
+app.use(session({
+  secret: "thisisasecret", // change this!
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 
 
 // HOMEPAGE ROUTE
@@ -30,6 +51,23 @@ app.get("/", function (req, res) {
       res.render("index", { posts: allPosts, });
     }
   });
+});
+
+// AUTH ROUTES
+app.get("/signup", function (req, res) {
+  res.render("signup");
+});
+
+// sign up new user, then log them in
+// hashes and salts password, saves new user to db
+app.post("/signup", function (req, res) {
+  User.register(new User({ username: req.body.username, }), req.body.password,
+      function () {
+        passport.authenticate("local")(req, res, function() {
+          res.redirect("/");
+        });
+      }
+  );
 });
 
 app.get("/posts/:id", function(req, res) {
