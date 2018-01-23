@@ -128,6 +128,7 @@ app.put("/posts/:id", function (req, res) {
       res.status(500).json({ error: err.message, });
     } else if (foundPost.user && (foundPost.user !== req.user._id)) {
       res.redirect("/");
+      return;
     } else {
       // update the posts's attributes
       foundPost.title = req.body.title || foundPost.title;
