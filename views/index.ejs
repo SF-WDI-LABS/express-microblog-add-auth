@@ -30,6 +30,15 @@
     <div class="container">
       <div class="page-header">
         <h1>Microblog <small>share your thoughts</small></h1>
+
+        <% if(!user) { %>
+          <a href="/login">Log in</a>
+          <a href="/signup">Sign up</a>
+        <% } else { %>
+          <div>Welcome, <%= user.username %>!</div>
+          <a href="/logout">Log out</a>
+        <% } %>
+
       </div>
     </div>
   </div>
