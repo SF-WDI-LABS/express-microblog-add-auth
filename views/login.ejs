@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- set viewport to device width to make site responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- bootstrap css -->
+  <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- custom styles -->
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
+  <!-- jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <!-- bootstrap js -->
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  <title>Express Microblog App</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Log In</h2>
+        <br>
+        <form method="POST" action="/login">
+          <div class="form-group">
+            <input type="text" name="username" class="form-control" placeholder="Username" autofocus>
+          </div>
+          <div class="form-group">
+            <input type="password" name="password" class="form-control" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <input type="submit" class="btn btn-block btn-primary" value="Log In">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

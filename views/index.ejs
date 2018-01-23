@@ -28,9 +28,20 @@
   <!-- header -->
   <div class="well">
     <div class="container">
-      <div class="page-header">
-        <h1>Microblog <small>share your thoughts</small></h1>
-      </div>
+      <nav class="navbar">
+        <div class="page-header">
+          <h1>Microblog <small>share your thoughts</small></h1>
+        </div>
+        <div class="signup"> 
+          <% if(!user) { %> 
+            <a href="/login">Log in</a>
+            <a href="/signup">Sign up</a>
+          <% } else { %>
+            <div>Welcome, <%= user.username %>!</div>
+            <a href="/logout">Log out</a>
+          <% } %>
+        </div>
+      </nav>
     </div>
   </div>
 
@@ -57,13 +68,14 @@
         <ul class="list-group" id="posts-list">
 
           <% for (let post of posts) { %>
+          <!-- for (let i = 0; i < posts.lenght; i++) -->
               <li class="list-group-item post" data-id="<%= post._id %>">
 
                 <!-- post label (title) -->
-                <a href="/posts/<%= post._id %>" class="label label-default"><%= post.title %></a>
+                <a href="/posts/<%= post._id %>" class="label label-default"><%= post.title %></a>   <!-- posts[i].title (normal for loop)-->           
 
                 <!-- post description -->
-                <%= post.description %>
+                <%= post.description %> <!-- posts[i].title (normal for loop)-->  
 
                 <div class="pull-right">
                   <!-- pencil icon to toggle update form -->
@@ -72,7 +84,7 @@
                   </a>
 
                   <!-- trash can icon to delete post -->
-                  <form action="/posts/<%= post._id %>" method="DELETE">
+                  <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
                     <button>
                       <span class="glyphicon glyphicon-trash"></span>
                     </button>
