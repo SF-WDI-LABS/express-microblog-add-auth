@@ -47,17 +47,19 @@
       <div class="col-md-12">
 
         <!-- new post form-->
-        <form class="form-inline" id="create-post" method="POST" action="/posts">
-          <div class="form-group">
-            <input type="text" name="title" class="form-control" placeholder="Title" autofocus>
-          </div>
-          <div class="form-group">
-            <input type="text" name="description" class="form-control" placeholder="Description">
-          </div>
-          <div class="form-group">
-            <input type="submit" class="btn btn-default" value="Add Post">
-          </div>
-        </form>
+        <% if(user) { %>
+          <form class="form-inline" id="create-post" method="POST" action="/posts">
+            <div class="form-group">
+              <input type="text" name="title" class="form-control" placeholder="Title" autofocus>
+            </div>
+            <div class="form-group">
+              <input type="text" name="description" class="form-control" placeholder="Description">
+            </div>
+            <div class="form-group">
+              <input type="submit" class="btn btn-default" value="Add Post">
+            </div>
+          </form>
+        <% } %>
         <br>
 
         <!-- list of posts -->

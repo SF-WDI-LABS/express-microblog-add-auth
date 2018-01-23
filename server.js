@@ -100,6 +100,10 @@ app.get("/posts/:id", function(req, res) {
 });
 
 app.post("/posts", function(req, res) {
+  if (!req.user) {
+    res.redirect("/");
+    return;
+  }
   var newPost = new Post(req.body);
 
   // save new post in db
