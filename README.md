@@ -454,7 +454,8 @@ Just like in `erb`, `ejs` gives us the ability to conditionally render things on
 
    ...
    app.get('/', function (req, res) {
-        res.render('index', {user: req.user);
+        // ....
+        res.render("index", { posts: allPosts, user: req.user, });
    });
   ```
 

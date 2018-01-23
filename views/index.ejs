@@ -72,7 +72,7 @@
                   </a>
 
                   <!-- trash can icon to delete post -->
-                  <form action="/posts/<%= post._id %>" method="DELETE">
+                  <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
                     <button>
                       <span class="glyphicon glyphicon-trash"></span>
                     </button>
