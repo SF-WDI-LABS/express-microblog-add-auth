@@ -90,7 +90,7 @@ app.get("/logout", function (req, res) {
 // SHOW PAGE ROUTE
 
 app.get("/posts/:id", function(req, res) {
-  Post.findById(req.params.id, function (err, foundPost) {
+  Post.findById(req.params.id).populate("user").exec(function (err, foundPost) {
     if (err) {
       res.status(500).json({ error: err.message, });
     } else {
@@ -105,6 +105,7 @@ app.post("/posts", function(req, res) {
     return;
   }
   var newPost = new Post(req.body);
+  newPost.user = req.user._id;
 
   // save new post in db
   newPost.save(function (err) {
@@ -125,6 +126,8 @@ app.put("/posts/:id", function (req, res) {
   Post.findOne({ _id: postId, }, function (err, foundPost) {
     if (err) {
       res.status(500).json({ error: err.message, });
+    } else if (foundPost.user && (foundPost.user !== req.user._id)) {
+      res.redirect("/");
     } else {
       // update the posts's attributes
       foundPost.title = req.body.title || foundPost.title;
@@ -149,7 +152,11 @@ app.delete("/posts/:id", function (req, res) {
   var postId = req.params.id;
 
   // find post in db by id and remove
-  Post.findOneAndRemove({ _id: postId, }, function () {
+  if(!req.user) {
+    res.redirect("/");
+    return;
+  }
+  Post.findOneAndRemove({ _id: postId, user: req.user._id, }, function () {
     res.redirect("/");
   });
 });

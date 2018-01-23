@@ -42,6 +42,8 @@
 
                 <!-- post label (title) -->
                 <span class="label label-default"><%= post.title %></span>
+                <!-- post author -->
+                <span class="author"><%= post.user ? post.user.username : "" %></span>
 
                 <!-- post description -->
                 <%= post.description %>
