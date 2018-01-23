@@ -38,6 +38,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+ app.get('/', function (req, res) {
+      res.render('index', {user: req.user});
+ });
+
+
 // HOMEPAGE ROUTE
 
 app.get("/", function (req, res) {
@@ -92,14 +97,23 @@ app.get("/posts/:id", function(req, res) {
   Post.findById(req.params.id, function (err, foundPost) {
     if (err) {
       res.status(500).json({ error: err.message, });
+    } else if (foundPost.user && (foundPost.user !== req.user._id){
+      res.redirect("/");
+      return;
     } else {
+      // update the post's
       res.render("posts/show", { post: foundPost, });
     }
   });
 });
 
 app.post("/posts", function(req, res) {
+  if (!req.user) {
+    res.redirect("/");
+    return;
+  }
   var newPost = new Post(req.body);
+  newPost.user = req.user._id;
 
   // save new post in db
   newPost.save(function (err) {
@@ -120,6 +134,9 @@ app.put("/posts/:id", function (req, res) {
   Post.findOne({ _id: postId, }, function (err, foundPost) {
     if (err) {
       res.status(500).json({ error: err.message, });
+    } else if (foundPost.user && (foundPost.user !== req.user._id)) {
+      res.redirect("/");
+      return;
     } else {
       // update the posts's attributes
       foundPost.title = req.body.title || foundPost.title;
