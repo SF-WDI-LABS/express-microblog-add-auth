@@ -102,19 +102,19 @@ app.get("/posts/:id", function(req, res) {
 app.post("/posts", function(req, res) {
   if (!req.user) {
     res.redirect("/");
-    return;
-  }
-  var newPost = new Post(req.body);
-  newPost.user = req.user._id;
+  } else {
+    var newPost = new Post(req.body);
+    newPost.user = req.user._id;
 
-  // save new post in db
-  newPost.save(function (err) {
-    if (err) {
-      res.status(500).json({ error: err.message, });
-    } else {
-      res.redirect("/");
-    }
-  });
+    // save new post in db
+    newPost.save(function (err) {
+      if (err) {
+        res.status(500).json({ error: err.message, });
+      } else {
+        res.redirect("/");
+      }
+    });
+  }
 });
 
 // update post
@@ -124,12 +124,17 @@ app.put("/posts/:id", function (req, res) {
 
   // find post in db by id
   Post.findOne({ _id: postId, }, function (err, foundPost) {
+    console.log("found post is", foundPost);
+    console.log(`found post user is ${foundPost.user} with type ${typeof foundPost.user}.`);
+    console.log(`req user id is ${req.user._id} with type ${typeof req.user._id}.`);
     if (err) {
       res.status(500).json({ error: err.message, });
-    } else if (foundPost.user && (foundPost.user !== req.user._id)) {
+    } else if (foundPost.user && (foundPost.user.toString() != req.user._id.toString())) {
+      console.log("not saving");
       res.redirect("/");
       return;
     } else {
+      console.log("saving");
       // update the posts's attributes
       foundPost.title = req.body.title || foundPost.title;
       foundPost.description = req.body.description || foundPost.description;
